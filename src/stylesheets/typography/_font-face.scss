@@ -2,5 +2,51 @@
 //  $Font Face
 //------------------------------------------------------------------------
 
+@include font-face(K66, '../fonts/K66', 100, normal);
+@include font-face(K67, '../fonts/K67', 200, normal);
+@include font-face(K68, '../fonts/K68', 300, normal);
+@include font-face(K69, '../fonts/K69', 400, normal);
+@include font-face(K70, '../fonts/K70', 500, normal);
+@include font-face(K72, '../fonts/K72', 600, normal);
+@include font-face(K73, '../fonts/K73', 700, normal);
+@include font-face(K74, '../fonts/K74', 800, normal);
 
-// @include font-face();
+@mixin K66 {
+  font-family: 'K66', Impact;
+  font-weight: 100;
+}
+
+@mixin K67 {
+  font-family: 'K67', Impact;
+  font-weight: 200;
+}
+
+@mixin K68 {
+  font-family: 'K68', Impact;
+  font-weight: 300;
+}
+
+@mixin K69 {
+  font-family: 'K69', Impact;
+  font-weight: 400;
+}
+
+@mixin K70 {
+  font-family: 'K70', Impact;
+  font-weight: 500;
+}
+
+@mixin K72 {
+  font-family: 'K72', Impact;
+  font-weight: 600;
+}
+
+@mixin K73 {
+  font-family: 'K73', Impact;
+  font-weight: 700;
+}
+
+@mixin K74 {
+  font-family: 'K74', Impact;
+  font-weight: 800;
+}

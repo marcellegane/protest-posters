@@ -2,7 +2,7 @@
   position: relative;
   width: $p-width;
   overflow: hidden;
-  font-family: Impact;
+  @include K66();
   font-size: $p-width * $p-font-factor;
   line-height: 1;
   text-transform: uppercase;

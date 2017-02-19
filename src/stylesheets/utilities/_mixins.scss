@@ -1,0 +1,82 @@
+//------------------------------------------------------------------------
+//  $Type flow
+//------------------------------------------------------------------------
+
+@mixin flow {
+	& > * + * {
+		margin-top: 1em;
+	}
+}
+
+//-------------------------------------------------
+//  @font-face
+//-------------------------------------------------
+
+// Based on http://codepen.io/javasteve99/pen/hDxpn
+@mixin font-face($font-family, $file-path, $font-weight: normal, $font-style: normal) {
+  @font-face {
+    font-family: $font-family;
+    src: url('#{$file-path}.eot');
+    src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+         url('#{$file-path}.woff2') format('woff2'),
+         url('#{$file-path}.woff') format('woff'),
+         url('#{$file-path}.ttf') format('truetype'),
+         url('#{$file-path}.svg##{$font-family}') format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+
+  // Chrome for Windows rendering fix: http://www.adtrak.co.uk/blog/font-face-chrome-rendering/
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+      font-family: $font-family;
+      src: url('#{$file-path}.svg##{$font-family}') format('svg')
+    }
+  }
+}
+
+//------------------------------------------------------------------------
+//  Neat Outer Container
+//------------------------------------------------------------------------
+
+@mixin outer-container($local-max-width: $max-width) {
+  @include clearfix;
+  max-width: $local-max-width;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+//------------------------------------------------------------------------
+//  $Responsive Type
+//------------------------------------------------------------------------
+
+@mixin fluidType($min, $max, $vw) {
+	$min-width: $min / ($vw / 100);
+	$max-width: $max / ($vw / 100);
+
+	font-size: em($min);
+
+	// Min required font-size / (number of viewport units/100)
+	@media (min-width: em($min-width)) {
+		font-size: em($max/1.5);
+		font-size: #{$vw}vw;
+	}
+
+	// Max required font-size / (number of viewport units/100)
+	@media (min-width: em($max-width)) {
+		font-size: em($max);
+	}
+}
+
+//------------------------------------------------------------------------
+//  $Placeholder
+//------------------------------------------------------------------------
+
+@mixin placeholder {
+	::-webkit-input-placeholder {@content}
+	:-moz-placeholder           {@content}
+	::-moz-placeholder          {@content}
+	:-ms-input-placeholder      {@content}
+}

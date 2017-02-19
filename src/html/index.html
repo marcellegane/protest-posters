@@ -1,4 +1,60 @@
 {% extends 'layouts/application.html' %}
 {% block content %}
-  <h1 data-module="example">Hello World!</h1>
+  <main class="main">
+    <div class="editor">
+      <div class="edit js-edit" data-line="1">
+        <div class="edit__header">
+          <h2 class="edit__title">Line 1</h2>
+          <button class="edit__delete js-delete">Delete</button>
+        </div>
+
+        <div class="edit__fieldset">
+          <label for="edit-text-1" class="edit__label">Text</label>
+          <input id="edit-text-1" class="edit__input edit__input--text js-input-text" type="text" value="No" />
+        </div>
+      </div>
+
+      <div class="edit js-edit" data-line="2">
+        <div class="edit__header">
+          <h2 class="edit__title">Line 2</h2>
+          <button class="edit__delete js-delete">Delete</button>
+        </div>
+
+        <div class="edit__fieldset">
+          <label for="edit-text-1" class="edit__label">Text</label>
+          <input id="edit-text-1" class="edit__input edit__input--text js-input-text" type="text" value="Muslim" />
+        </div>
+      </div>
+
+      <div class="edit js-edit" data-line="3">
+        <div class="edit__header">
+          <h2 class="edit__title">Line 3</h2>
+          <button class="edit__delete js-delete">Delete</button>
+        </div>
+
+        <div class="edit__fieldset">
+          <label for="edit-text-1" class="edit__label">Text</label>
+          <input id="edit-text-1" class="edit__input edit__input--text js-input-text" type="text" value="Ban" />
+        </div>
+      </div>
+    </div>
+
+    <div class="view">
+      <div class="poster js-poster">
+        <p class="poster__text js-editable">
+          <span class="line js-line"><span class="line__inner js-line-inner">No</span></span>
+          <span class="line js-line"><span class="line__inner js-line-inner">Muslim</span></span>
+          <span class="line js-line"><span class="line__inner js-line-inner">Ban</span></span>
+        </p>
+      </div>
+
+      <fieldset class="fieldset">
+        <legend>Orientation</legend>
+        <input class="js-orientation" type="radio" name="orientation" id="portrait" value="0" checked>
+        <label for="portrait">Portrait</label>
+        <input class="js-orientation" type="radio" name="orientation" id="landscape" value="1">
+        <label for="landscape">Landscape</label>
+      </fieldset>
+    </div>
+  </main>
 {% endblock %}

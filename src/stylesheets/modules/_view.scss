@@ -1,0 +1,5 @@
+.view {
+  @include media($medium-screen-up) {
+    margin: 1rem;
+  }
+}

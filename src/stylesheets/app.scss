@@ -34,12 +34,15 @@
 //------------------------------------------------------------------------
 
 @import "components/buttons";
+@import "components/line";
+@import "components/fieldset";
 
 //------------------------------------------------------------------------
 //  $Modules
 //------------------------------------------------------------------------
 
 @import "modules/layout";
-@import "modules/header";
-@import "modules/navigation";
-@import "modules/footer";
+@import "modules/main";
+@import "modules/editor";
+@import "modules/view";
+@import "modules/poster";

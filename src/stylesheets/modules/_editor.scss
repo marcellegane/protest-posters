@@ -1,0 +1,78 @@
+.editor {
+  padding: 1rem;
+
+  @include media($medium-screen-up) {
+    flex-grow: 1;
+    margin: 1rem;
+  }
+}
+
+.edit {
+  + .edit {
+    margin-top: 1.75rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.3125rem;
+    border-bottom: 0.0625rem solid $grey3;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: $fw-bold;
+    letter-spacing: 0.1125rem;
+    text-transform: uppercase;
+  }
+
+  &__delete {
+    margin: 0;
+    padding: 0;
+    font-size: 0.75rem;
+    font-weight: $fw-bold;
+    letter-spacing: 0.09375rem;
+    text-transform: uppercase;
+    color: $white;
+    background: none;
+    border: none;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+
+    &:hover,
+    &:active,
+    &:focus {
+      outline: none;
+      opacity: 1;
+    }
+  }
+
+  &__fieldset {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  &__label {
+    margin-right: 0.75rem;
+    color: $grey2;
+  }
+
+  &__input {
+    flex-grow: 1;
+
+    &--text {
+      padding: 0.4375rem 0.75rem;
+      font-size: 1.25rem;
+      color: $white;
+      background: none;
+      border: 2px solid $white;
+      outline: none;
+
+      &::selection { background: $white; }
+      &::-moz-selection { background: $white; }
+    }
+  }
+}

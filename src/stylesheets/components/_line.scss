@@ -1,0 +1,13 @@
+.line {
+  display: block;
+
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: default;
+  }
+
+  &__inner {
+    white-space: nowrap;
+  }
+}

@@ -1,5 +1,3 @@
-// import { module } from './modules/module';
-// module();
 import $ from 'jquery';
 window.$ = $;
 
@@ -21,6 +19,7 @@ const setFontSize = (id) => {
   const fontRatio = maxWidth / currWidth;
   const style = $child.attr(`style`);
   let emValue = 1;
+  let childHeight;
 
   // If font size is already set get value in ems
   if (style) {
@@ -31,6 +30,9 @@ const setFontSize = (id) => {
   }
 
   $child.css(`font-size`, `${fontRatio * emValue}em`);
+
+  childHeight = $child.height();
+  $parent.height(childHeight);
 };
 
 $orientation.on(`click`, () => {

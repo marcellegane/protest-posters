@@ -1,55 +1,80 @@
 import $ from 'jquery';
 window.$ = $;
 
-const $poster = $(`.js-poster`);
-const $orientation = $(`.js-orientation`);
-const $inputText = $(`.js-input-text`);
-const $line = $(`.js-line`);
-const lineInnerClass = `.js-line-inner`;
+const a3W = 3508;
+const a3H = 4961;
 
-const setText = (id, text) => {
-  $line.eq(id - 1).find(lineInnerClass).text(text);
-};
+const $main = $(`#main`);
+const $a3 = $(`#a3`);
+const mainWidth = $main.width();
+const mainHeight = $main.height();
+const a3Width = $a3.width();
+const ratio = a3Width / mainWidth;
+const canvas = document.getElementById(`canvas`);
+const ctx = canvas.getContext(`2d`);
+const canvasLarge = document.getElementById(`a3`);
+const ctxLarge = canvasLarge.getContext(`2d`);
 
-const setFontSize = (id) => {
-  const $parent = $line.eq(id - 1);
-  const $child = $parent.find(lineInnerClass);
-  const maxWidth = $parent.width();
-  const currWidth = $child.width();
-  const fontRatio = maxWidth / currWidth;
-  const style = $child.attr(`style`);
-  let emValue = 1;
-  let childHeight;
+const t1 = `NO SIR`;
+const t1Size = 200;
+const t2 = `MUSLIM`;
+const t2Size = 80;
+const t3 = `BAN`;
+const t3Size = 120;
 
-  // If font size is already set get value in ems
-  if (style) {
-    const parentFontSize = $poster.css(`font-size`);
-    const childFontSize = $child.css(`font-size`);
+function setCanvas() {
+  canvas.width = mainWidth;
+  canvas.height = mainHeight;
+  ctx.fillStyle = `white`;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-    emValue = parseFloat(childFontSize) / parseFloat(parentFontSize);
-  }
+function setText(c, context, ratio = 1) {
+  context.fillStyle = `black`;
+  context.textAlign = `center`;
+  context.textBaseline = `middle`;
 
-  $child.css(`font-size`, `${fontRatio * emValue}em`);
+  context.font = `400 ${t1Size * ratio}px Montserrat`;
+  const fitRatio = (c.width * 0.87) / context.measureText(t1).width;
+  context.font = `400 ${t1Size * ratio * fitRatio}px Montserrat`;
+  context.fillText(t1, c.width / 2, (c.height / 4));
+  // console.log(`${context.measureText(t1).width}`);
 
-  childHeight = $child.height();
-  $parent.height(childHeight);
-};
+  context.font = `400 ${t2Size * ratio}px Montserrat`;
+  context.fillText(t2, c.width / 2, (c.height / 4) * 2);
 
-$orientation.on(`click`, () => {
-  const checked = $(`input[name=orientation]:checked`).attr(`id`);
+  context.font = `400 ${t3Size * ratio}px Montserrat`;
+  context.fillText(t3, c.width / 2, (c.height / 4) * 3);
+}
 
-  if (checked === `landscape`) {
-    $poster.addClass(`poster--landscape`);
-  } else {
-    $poster.removeClass(`poster--landscape`);
-  }
+function setCanvasLarge() {
+  ctxLarge.fillStyle = `white`;
+  ctxLarge.fillRect(0, 0, canvasLarge.width, canvasLarge.height);
+}
+
+setCanvas();
+setText(canvas, ctx);
+
+setCanvasLarge();
+setText(canvasLarge, ctxLarge, ratio);
+
+$(`#download`).on(`click`, () => {
+  const dataURL = canvasLarge.toDataURL();
+  const a = document.createElement(`a`);
+
+  a.href = dataURL;
+  a.download = `poster.png`;
+  a.click();
 });
 
-$inputText.on(`mouseup keyup`, (e) => {
-  const $this = $(e.currentTarget);
-  const id = $this.parents(`.js-edit`).data(`line`);
-  const text = $this.val();
+// 2 lines
+// split = h / 3;
+// 1 = split * 1;
+// 2 = split * 2;
 
-  setText(id, text);
-  setFontSize(id);
-});
+// 3 lines
+// split = h / 4
+// 1 = split * 1;
+// 2 = split * 2;
+// 3 = split * 3;
+

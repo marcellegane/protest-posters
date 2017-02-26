@@ -1,7 +1,10 @@
 {% extends 'layouts/application.html' %}
 {% block content %}
-  <main class="main">
-    <div class="editor">
+  <button id="download" class="test">Download!</button>
+  <main id="main" class="main">
+    <canvas id="a3" class="a3" width="3508" height="4961"></canvas>
+    <canvas id="canvas" class="canvas"></canvas>
+    <!-- <div class="editor">
       <div class="edit js-edit" data-line="1">
         <div class="edit__header">
           <h2 class="edit__title">Line 1</h2>
@@ -55,6 +58,6 @@
         <input class="js-orientation" type="radio" name="orientation" id="landscape" value="1">
         <label for="landscape">Landscape</label>
       </fieldset>
-    </div>
+    </div> -->
   </main>
 {% endblock %}

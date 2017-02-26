@@ -1,80 +1,101 @@
 import $ from 'jquery';
 window.$ = $;
 
-const a3W = 3508;
-const a3H = 4961;
+let lines = [
+  { text: `NO`, weight: 400 },
+  { text: `MUSLIM`, weight: 400 },
+  { text: `BAN`, weight: 400 }
+];
 
-const $main = $(`#main`);
-const $a3 = $(`#a3`);
-const mainWidth = $main.width();
-const mainHeight = $main.height();
-const a3Width = $a3.width();
-const ratio = a3Width / mainWidth;
-const canvas = document.getElementById(`canvas`);
-const ctx = canvas.getContext(`2d`);
-const canvasLarge = document.getElementById(`a3`);
-const ctxLarge = canvasLarge.getContext(`2d`);
+class Poster {
+  constructor(id, parentId) {
+    this.id = id;
+    this.parent = $(`#${parentId}`);
+    this.poster = document.getElementById(this.id);
+    this.posterCtx = this.poster.getContext(`2d`);
+  }
 
-const t1 = `NO SIR`;
-const t1Size = 200;
-const t2 = `MUSLIM`;
-const t2Size = 80;
-const t3 = `BAN`;
-const t3Size = 120;
+  setDimensions() {
+    this.poster.width = this.parent.width();
+    this.poster.height = this.parent.height();
+  }
 
-function setCanvas() {
-  canvas.width = mainWidth;
-  canvas.height = mainHeight;
-  ctx.fillStyle = `white`;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  resize() {
+    this.setDimensions();
+  }
+
+  render() {
+    this.setDimensions();
+  }
 }
 
-function setText(c, context, ratio = 1) {
-  context.fillStyle = `black`;
-  context.textAlign = `center`;
-  context.textBaseline = `middle`;
+class Lines {
+  constructor(lines = [], posterId, printId) {
+    this.lines = lines;
+    this.canvas = document.getElementById(posterId);
+    this.ctx = this.canvas.getContext(`2d`);
+    this.print = document.getElementById(printId);
+    this.printCtx = this.print.getContext(`2d`);
+  }
 
-  context.font = `400 ${t1Size * ratio}px Montserrat`;
-  const fitRatio = (c.width * 0.87) / context.measureText(t1).width;
-  context.font = `400 ${t1Size * ratio * fitRatio}px Montserrat`;
-  context.fillText(t1, c.width / 2, (c.height / 4));
-  // console.log(`${context.measureText(t1).width}`);
+  drawLine(canvas, ctx, line, lineIndex, ratio = 1) {
+    let fitRatio;
+    this.fontSize = 200;
 
-  context.font = `400 ${t2Size * ratio}px Montserrat`;
-  context.fillText(t2, c.width / 2, (c.height / 4) * 2);
+    ctx.font = `${line.weight} ${this.fontSize * ratio}px Montserrat`;
+    fitRatio = (canvas.width * 0.87) / ctx.measureText(line.text).width;
+    ctx.font = `${line.weight} ${this.fontSize * ratio * fitRatio}px Montserrat`;
+    ctx.fillText(line.text, canvas.width / 2, this.getLineHeight(canvas) * (lineIndex + 1));
+  }
 
-  context.font = `400 ${t3Size * ratio}px Montserrat`;
-  context.fillText(t3, c.width / 2, (c.height / 4) * 3);
+  getLineHeight(canvas) {
+    return canvas.height / (this.lines.length + 1);
+  }
+
+  setCanvas(canvas, ctx) {
+    ctx.fillStyle = `white`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = `black`;
+    ctx.textAlign = `center`;
+    ctx.textBaseline = `middle`;
+  }
+
+  drawText() {
+    const fontRatio = this.print.width / this.canvas.width;
+
+    this.setCanvas(this.canvas, this.ctx);
+    this.setCanvas(this.print, this.printCtx);
+
+    for (let line of this.lines) {
+      const index = this.lines.indexOf(line);
+
+      this.drawLine(this.canvas, this.ctx, line, index);
+      this.drawLine(this.print, this.printCtx, line, index, fontRatio);
+    }
+  }
+
+  render() {
+    this.drawText();
+  }
 }
 
-function setCanvasLarge() {
-  ctxLarge.fillStyle = `white`;
-  ctxLarge.fillRect(0, 0, canvasLarge.width, canvasLarge.height);
-}
+const poster = new Poster(`poster`, `main`);
+const text = new Lines(lines, `poster`, `print`);
 
-setCanvas();
-setText(canvas, ctx);
+poster.render();
+text.render();
 
-setCanvasLarge();
-setText(canvasLarge, ctxLarge, ratio);
+$(window).on(`resize`, () => {
+  poster.resize();
+  text.render();
+});
 
 $(`#download`).on(`click`, () => {
-  const dataURL = canvasLarge.toDataURL();
+  const print = document.getElementById(`print`);
+  const dataURL = print.toDataURL();
   const a = document.createElement(`a`);
 
   a.href = dataURL;
   a.download = `poster.png`;
   a.click();
 });
-
-// 2 lines
-// split = h / 3;
-// 1 = split * 1;
-// 2 = split * 2;
-
-// 3 lines
-// split = h / 4
-// 1 = split * 1;
-// 2 = split * 2;
-// 3 = split * 3;
-

@@ -79,8 +79,8 @@ class Lines {
   }
 }
 
-const poster = new Poster(`poster`, `main`);
-const text = new Lines(lines, `poster`, `print`);
+const poster = new Poster(`poster-edit`, `main`);
+const text = new Lines(lines, `poster-edit`, `poster-print`);
 
 poster.render();
 text.render();
